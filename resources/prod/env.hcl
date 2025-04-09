@@ -11,6 +11,6 @@ locals {
   eks_controlplane_subnet_az1 = "subnet-0461fd3764a4a82ed"
   eks_controlplane_subnet_az2 = "subnet-0e6f2adc0065af763"
 
-  project_name = "Observability"
+  project_name = "Obs"
 
   }
