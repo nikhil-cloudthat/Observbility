@@ -1,0 +1,151 @@
+prometheus-msteams:
+  replicaCount: 1
+  nameOverride: "prometheus-msteams"
+  fullnameOverride: "prometheus-msteams"
+  image:
+    repository: quay.io/prometheusmsteams/prometheus-msteams
+    tag: v1.5.2
+    pullPolicy: Always
+
+  imagePullSecrets: []
+
+  extraEnvs: {}
+
+  container:
+    port: 2000
+    additionalArgs: 
+      - -debug
+
+  resources: {}
+  #  limits:
+  #    cpu: 10m
+  #    memory: 32Mi
+  #  requests:
+  #    cpu: 1m
+  #    memory: 8Mi
+
+  service:
+    type: ClusterIP
+    port: 2000
+
+  serviceAccount:
+   # Specifies whether a service account should be created
+   create: false
+   # Annotations to add to the service account
+   annotations: {}
+   # The name of the service account to use.
+   # If not set and create is true, a name is generated using the fullname template
+   name: ""
+ 
+  nodeSelector: {}
+
+  tolerations: []
+
+  affinity: {}
+
+  containerSecurityContext: {}
+
+  podSecurityContext:
+    runAsUser: 1000
+    runAsNonRoot: true
+
+  priorityClassName: ""
+
+  # Custom labels for pod assignment
+  podLabels: {}
+
+  metrics:
+    serviceMonitor:
+      enabled: false
+      additionalLabels: {}
+      scrapeInterval: 30s
+
+  ## Specify the custom message card template for MS teams
+  customCardTemplate: ""
+  # customCardTemplate: |
+  #   {{ define "teams.card" }}
+  #   {...}
+  #   {{ end }}
+
+  templateFile: /etc/template/card.tmpl
+
+  extraConfigmapMounts: []
+  # extraConfigmapMounts:
+  #   - name: customConfigMap
+  #     configMap:
+  #       name: customConfigMapName
+
+  ## Additional Volume mounts
+  extraVolumeMounts: []
+  # extraVolumeMounts:
+  #   - name: volume-name
+  #     mountPath: /etc/custom_path
+
+  connectors: 
+    - bar: https://cloudthat365.webhook.office.com/webhookb2/e1897a3b-fb52-43dd-bbbe-939960c99a69@815db2f7-1e3a-438f-8bdd-e55de825adee/IncomingWebhook/2e67bbf4f1d04131aa1bb51e242ea3fa/c02eef50-3fe8-4554-b99f-026ea4713572/V2ihciyrvdbQ3Z86mtCuG6z2Iw0-DY6b_GeewZBEh5MMQ1
+
+  # ref: https://github.com/prometheus-msteams/prometheus-msteams#customise-messages-per-ms-teams-channel
+  connectorsWithCustomTemplates: 
+    # - request_path: /alert
+    #   webhook_url: "https://cloudthat365.webhook.office.com/webhookb2/e043800c-cbfd-445d-8c61-a6d4165f35a5@815db2f7-1e3a-438f-8bdd-e55de825adee/IncomingWebhook/eb121e7bac8744a2820ee79bf9377249/5473a1e8-d683-419d-8b12-4b4b6cfb359d/V2n2v_PXGBtFjtfcIJ2cOoG4OLm-ERImHvMys-PYv-77E1"
+    #   template_file: |
+    #     {{ define "teams.card" }}
+    #     {
+    #       "@type": "MessageCard",
+    #       "@context": "http://schema.org/extensions",
+    #       "themeColor": "{{ if eq .Status `firing` }}FF0000{{ else }}008000{{ end }}",
+    #       "summary": "Prometheus Alert",
+    #       "title": "{{ .CommonAnnotations.summary }}",
+    #       "sections": [
+    #         {
+    #           "activityTitle": "🔔 *Alert:* {{ .CommonLabels.alertname }}",
+    #           "activitySubtitle": "{{ .Status | title }}",
+    #           "activityImage": "https://upload.wikimedia.org/wikipedia/commons/3/38/Prometheus_software_logo.svg",
+    #           "facts": [
+    #             {
+    #               "name": "🔥 Severity",
+    #               "value": "{{ .CommonLabels.severity }}"
+    #             },
+    #             {
+    #               "name": "📍 Namespace",
+    #               "value": "{{ .CommonLabels.namespace }}"
+    #             },
+    #             {
+    #               "name": "🚀 Pod",
+    #               "value": "{{ .CommonLabels.pod }}"
+    #             },
+    #             {
+    #               "name": "🚚 Container",
+    #               "value": "{{ .CommonLabels.container | default "N/A" }}"
+    #             },
+    #             {
+    #               "name": "📌 Description",
+    #               "value": "{{ .CommonAnnotations.description }}"
+    #             }
+    #           ],
+    #           "markdown": true
+    #         }
+    #       ],
+    #       "potentialAction": [
+    #         {
+    #           "@type": "OpenUri",
+    #           "name": "📊 View in Prometheus",
+    #           "targets": [
+    #             {
+    #               "os": "default",
+    #               "uri": "http://a9c541f6abdb94ead86ba236004b11e7-1722292771.ap-south-1.elb.amazonaws.com/graph?g0.expr={{ .CommonLabels.alertname }}&g0.tab=0"
+    #             }
+    #           ]
+    #         }
+    #       ]
+    #     }
+    #     {{ end }}
+      # escape_underscores: true
+
+  # Env from existing secrets or configmaps (in same namespace), will passed through to contains 'envFrom'
+  envFrom: {}
+  # envFrom:
+  #   - secretRef:
+  #       name: my-prometheus-msteams-env-secret
+  #   - configMapRef:
+  #       name: my-prometheus-msteams-env-cm

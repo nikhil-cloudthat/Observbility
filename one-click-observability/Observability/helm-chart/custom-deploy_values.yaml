@@ -1,0 +1,26 @@
+prometheus:
+  enabled: true
+
+tempo-distributed:
+  enabled: true
+
+grafana:
+  enabled: true
+
+alloy:
+  enabled: true
+
+loki-distributed:
+  enabled: true
+
+fluentbit:
+  enabled: true
+  
+alertmanager:
+  enabled: true
+
+prometheus-msteams:
+  enabled: true
+
+kubescape-operator:
+  enabled: true
