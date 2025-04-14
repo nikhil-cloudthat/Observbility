@@ -86,7 +86,7 @@ module "eks" {
       from_port   = 0
       to_port     = 0
       type        = "ingress"
-      cidr_blocks = ["172.16.16.0/20"]
+      cidr_blocks = ["172.16.16.0/20"]       # 182.0.0.0/16
     }
   }
 
@@ -107,9 +107,51 @@ module "eks" {
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
-resource "helm_release" "observability" {
-  name       = "observability"
-  repository = "../../one-click-observability/Observability/helm-charts"
-  chart      = "obs"
+#locals {
+  # Given that your terragrunt.hcl is in Repository/Terraform/resources/prod,
+  # go 3 levels up to reach the repository root.
+#  repo_root = abspath("${get_terragrunt_dir()}/../../..")
+#}
 
-}
+#inputs = {
+#  repo_root = local.repo_root
+#}
+
+
+
+#resource "helm_release" "obs" {
+#  name      = var.release_name
+#  chart     = "${var.repo_root}/helm-chart"
+#  namespace = var.namespace
+
+  # Replicate the -f flags from your helm command. Use the repo_root variable.
+#  values = [
+#    file("${var.repo_root}/helm-chart/prometheus.yaml"),
+#    file("${var.repo_root}/helm-chart/alertmanager_values.yaml"),
+#    file("${var.repo_root}/helm-chart/alloy_values.yaml"),
+#    file("${var.repo_root}/helm-chart/fluentbit_values.yaml"),
+#    file("${var.repo_root}/helm-chart/grafana_values.yaml"),
+#    file("${var.repo_root}/helm-chart/kubescape_values.yaml"),
+#    file("${var.repo_root}/helm-chart/loki-distributed.yaml"),
+#    file("${var.repo_root}/helm-chart/tempo_values.yaml"),
+#    file("${var.repo_root}/helm-chart/promethus-msteams_values.yaml")
+#  ]
+
+#  dependency_update = true
+#}
+
+
+
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+#resource "null_resource" "helmfile_apply" {
+#  provisioner "local-exec" {
+#    command = <<EOT
+#      helmfile init
+#      helmfile apply -f ${path.module}/../../../helmfile/helmfile.yaml sync
+#    EOT
+#  }
+
+#  depends_on = [module.eks]  # Ensure the EKS cluster is ready
+#}

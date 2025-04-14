@@ -31,7 +31,7 @@ inputs = {
     eks_managed_node_groups = {
       worker-nodes = {
         name  = "worker-nodes"
-        instance_types = ["t3a.large"]
+        instance_types = ["t3a.medium"]
         ami_type       = "AL2_x86_64"
         min_size     = 1
         max_size     = 2
@@ -61,5 +61,9 @@ inputs = {
     environment  = include.env.locals.environment_name
     launched_by  = "terraform"
     project_name = include.env.locals.project_name
+
+
+    namespace = "default"
+    release_name = "obs"
     
 }

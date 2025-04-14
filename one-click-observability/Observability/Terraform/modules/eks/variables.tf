@@ -66,3 +66,17 @@ variable "project_name" {
   type        = string
   default     = "Observability"
 }
+
+
+#######################################################
+
+variable "release_name" {
+  description = "Name of the helm release"
+  type        = string
+}
+
+
+variable "namespace" {
+  description = "namespace"
+  type        = string
+}
