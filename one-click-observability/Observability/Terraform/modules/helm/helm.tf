@@ -32,6 +32,17 @@ data "aws_eks_cluster_auth" "cluster" {
 
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+resource "null_resource" "deploy_demo" {
+  provisioner "local-exec" {
+    command = "kubectl apply -f ${var.repo_root}/Demo/newapp.yaml"
+  }
+
+  # Ensures the deployment only runs after your EKS cluster is ready.
+  #depends_on = [module.eks]
+}
+
+#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 
 resource "helm_release" "obs" {
   name      = var.release_name
