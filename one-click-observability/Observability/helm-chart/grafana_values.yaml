@@ -668,7 +668,7 @@ grafana:
       - name: Loki
         type: loki
         editable: false
-        url: http://loki-gateway.{{.Release.Namespace}}.svc.cluster.local
+        url: http://loki-distributed-gateway.{{.Release.Namespace}}.svc.cluster.local
         access: proxy
         isDefault: false
         # jsonData:
@@ -700,7 +700,7 @@ grafana:
 
       - name: Tempo
         type: tempo
-        url: http://tempo.{{.Release.Namespace}}.svc.cluster.local:3100
+        url: http://tempo-query-frontend.{{.Release.Namespace}}.svc.cluster.local:3100
         editable: false
         access: proxy
         isDefault: false
