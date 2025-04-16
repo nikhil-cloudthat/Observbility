@@ -113,6 +113,8 @@ loki-distributed:                                       # modified
             store: memberlist
 
       memberlist:
+        bind_addr:
+          - ${MY_POD_IP}
         cluster_label: "{{ .Release.Name }}.{{ .Release.Namespace }}"
         join_members:
           - {{ include "loki.fullname" . }}-memberlist
@@ -455,9 +457,14 @@ loki-distributed:                                       # modified
     # -- Labels for ingester service
     serviceLabels: {}
     # -- Additional CLI args for the ingester
-    extraArgs: []
-    # -- Environment variables to add to the ingester pods
-    extraEnv: []
+    extraArgs: 
+      - -config.expand-env=true
+    # -- Environment variables to add to the compactor pods
+    extraEnv: 
+      - name: MY_POD_IP
+        valueFrom:
+          fieldRef:
+            fieldPath: status.podIP
     # -- Environment variables from secrets or configmaps to add to the ingester pods
     extraEnvFrom: []
     # -- Volume mounts to add to the ingester pods
@@ -597,9 +604,14 @@ loki-distributed:                                       # modified
     # -- Labels for distributor service
     serviceLabels: {}
     # -- Additional CLI args for the distributor
-    extraArgs: []
-    # -- Environment variables to add to the distributor pods
-    extraEnv: []
+    extraArgs: 
+      - -config.expand-env=true
+    # -- Environment variables to add to the compactor pods
+    extraEnv: 
+      - name: MY_POD_IP
+        valueFrom:
+          fieldRef:
+            fieldPath: status.podIP
     # -- Environment variables from secrets or configmaps to add to the distributor pods
     extraEnvFrom: []
     # -- Volume mounts to add to the distributor pods
@@ -699,9 +711,14 @@ loki-distributed:                                       # modified
     # -- Labels for querier service
     serviceLabels: {}
     # -- Additional CLI args for the querier
-    extraArgs: []
-    # -- Environment variables to add to the querier pods
-    extraEnv: []
+    extraArgs: 
+      - -config.expand-env=true
+    # -- Environment variables to add to the compactor pods
+    extraEnv: 
+      - name: MY_POD_IP
+        valueFrom:
+          fieldRef:
+            fieldPath: status.podIP
     # -- Environment variables from secrets or configmaps to add to the querier pods
     extraEnvFrom: []
     # -- Volume mounts to add to the querier pods
@@ -827,9 +844,14 @@ loki-distributed:                                       # modified
     # -- Labels for query-frontend service
     serviceLabels: {}
     # -- Additional CLI args for the query-frontend
-    extraArgs: []
-    # -- Environment variables to add to the query-frontend pods
-    extraEnv: []
+    extraArgs: 
+      - -config.expand-env=true
+    # -- Environment variables to add to the compactor pods
+    extraEnv: 
+      - name: MY_POD_IP
+        valueFrom:
+          fieldRef:
+            fieldPath: status.podIP
     # -- Environment variables from secrets or configmaps to add to the query-frontend pods
     extraEnvFrom: []
     # -- Volume mounts to add to the query-frontend pods
@@ -902,9 +924,14 @@ loki-distributed:                                       # modified
     # -- Labels for query-scheduler service
     serviceLabels: {}
     # -- Additional CLI args for the query-scheduler
-    extraArgs: []
-    # -- Environment variables to add to the query-scheduler pods
-    extraEnv: []
+    extraArgs: 
+      - -config.expand-env=true
+    # -- Environment variables to add to the compactor pods
+    extraEnv: 
+      - name: MY_POD_IP
+        valueFrom:
+          fieldRef:
+            fieldPath: status.podIP
     # -- Environment variables from secrets or configmaps to add to the query-scheduler pods
     extraEnvFrom: []
     # -- Volume mounts to add to the query-scheduler pods
@@ -972,9 +999,14 @@ loki-distributed:                                       # modified
     # -- Labels for table-manager service
     serviceLabels: {}
     # -- Additional CLI args for the table-manager
-    extraArgs: []
-    # -- Environment variables to add to the table-manager pods
-    extraEnv: []
+    extraArgs: 
+      - -config.expand-env=true
+    # -- Environment variables to add to the compactor pods
+    extraEnv: 
+      - name: MY_POD_IP
+        valueFrom:
+          fieldRef:
+            fieldPath: status.podIP
     # -- Environment variables from secrets or configmaps to add to the table-manager pods
     extraEnvFrom: []
     # -- Volume mounts to add to the table-manager pods
@@ -1107,9 +1139,14 @@ loki-distributed:                                       # modified
     # -- Annotations for gateway pods
     podAnnotations: {}
     # -- Additional CLI args for the gateway
-    extraArgs: []
-    # -- Environment variables to add to the gateway pods
-    extraEnv: []
+    extraArgs: 
+      - -config.expand-env=true
+    # -- Environment variables to add to the compactor pods
+    extraEnv: 
+      - name: MY_POD_IP
+        valueFrom:
+          fieldRef:
+            fieldPath: status.podIP
     # -- Environment variables from secrets or configmaps to add to the gateway pods
     extraEnvFrom: []
     # -- Volumes to add to the gateway pods
@@ -1420,9 +1457,14 @@ loki-distributed:                                       # modified
     # -- Labels for compactor service
     serviceLabels: {}
     # -- Additional CLI args for the compactor
-    extraArgs: []
+    extraArgs: 
+      - -config.expand-env=true
     # -- Environment variables to add to the compactor pods
-    extraEnv: []
+    extraEnv: 
+      - name: MY_POD_IP
+        valueFrom:
+          fieldRef:
+            fieldPath: status.podIP
     # -- Environment variables from secrets or configmaps to add to the compactor pods
     extraEnvFrom: []
     # -- Volume mounts to add to the compactor pods
@@ -1522,9 +1564,14 @@ loki-distributed:                                       # modified
     # -- Labels for ruler service
     serviceLabels: {}
     # -- Additional CLI args for the ruler
-    extraArgs: []
-    # -- Environment variables to add to the ruler pods
-    extraEnv: []
+    extraArgs: 
+      - -config.expand-env=true
+    # -- Environment variables to add to the compactor pods
+    extraEnv: 
+      - name: MY_POD_IP
+        valueFrom:
+          fieldRef:
+            fieldPath: status.podIP
     # -- Environment variables from secrets or configmaps to add to the ruler pods
     extraEnvFrom: []
     # -- Volume mounts to add to the ruler pods
@@ -1679,9 +1726,14 @@ loki-distributed:                                       # modified
     # -- Labels for index-gateway service
     serviceLabels: {}
     # -- Additional CLI args for the index-gateway
-    extraArgs: []
-    # -- Environment variables to add to the index-gateway pods
-    extraEnv: []
+    extraArgs: 
+      - -config.expand-env=true
+    # -- Environment variables to add to the compactor pods
+    extraEnv: 
+      - name: MY_POD_IP
+        valueFrom:
+          fieldRef:
+            fieldPath: status.podIP
     # -- Environment variables from secrets or configmaps to add to the index-gateway pods
     extraEnvFrom: []
     # -- Volume mounts to add to the index-gateway pods
@@ -1827,8 +1879,13 @@ loki-distributed:                                       # modified
     # -- Additional CLI args for memcached-chunks
     extraArgs:
       - -I 32m
+      - -config.expand-env=true
     # -- Environment variables to add to memcached-chunks pods
-    extraEnv: []
+    extraEnv: 
+      - name: MY_POD_IP
+        valueFrom:
+          fieldRef:
+            fieldPath: status.podIP
     # -- Environment variables from secrets or configmaps to add to memcached-chunks pods
     extraEnvFrom: []
     # -- Resource requests and limits for memcached-chunks
@@ -1898,8 +1955,13 @@ loki-distributed:                                       # modified
     # -- Additional CLI args for memcached-frontend
     extraArgs:
       - -I 32m
-    # -- Environment variables to add to memcached-frontend pods
-    extraEnv: []
+      - -config.expand-env=true
+    # -- Environment variables to add to the compactor pods
+    extraEnv: 
+      - name: MY_POD_IP
+        valueFrom:
+          fieldRef:
+            fieldPath: status.podIP
     # -- Environment variables from secrets or configmaps to add to memcached-frontend pods
     extraEnvFrom: []
     # -- Resource requests and limits for memcached-frontend
@@ -1965,8 +2027,13 @@ loki-distributed:                                       # modified
     # -- Additional CLI args for memcached-index-queries
     extraArgs:
       - -I 32m
-    # -- Environment variables to add to memcached-index-queries pods
-    extraEnv: []
+      - -config.expand-env=true
+    # -- Environment variables to add to the compactor pods
+    extraEnv: 
+      - name: MY_POD_IP
+        valueFrom:
+          fieldRef:
+            fieldPath: status.podIP
     # -- Environment variables from secrets or configmaps to add to memcached-index-queries pods
     extraEnvFrom: []
     # -- Resource requests and limits for memcached-index-queries
@@ -2032,6 +2099,13 @@ loki-distributed:                                       # modified
     # -- Additional CLI args for memcached-index-writes
     extraArgs:
       - -I 32m
+      - -config.expand-env=true
+    # -- Environment variables to add to the compactor pods
+    extraEnv: 
+      - name: MY_POD_IP
+        valueFrom:
+          fieldRef:
+            fieldPath: status.podIP
     # -- Environment variables to add to memcached-index-writes pods
     extraEnv: []
     # -- Environment variables from secrets or configmaps to add to memcached-index-writes pods
