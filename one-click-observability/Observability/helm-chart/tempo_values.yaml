@@ -162,9 +162,14 @@ tempo-distributed:                                          #modified
     # -- Annotations for ingester pods
     podAnnotations: {}
     # -- Additional CLI args for the ingester
-    extraArgs: []
-    # -- Environment variables to add to the ingester pods
-    extraEnv: []
+    extraArgs: 
+      - -config.expand-env=true
+    # -- Environment variables to add to the compactor pods
+    extraEnv: 
+      - name: MY_POD_IP
+        valueFrom:
+          fieldRef:
+            fieldPath: status.podIP
     # -- Environment variables from secrets or configmaps to add to the ingester pods
     extraEnvFrom: []
     # -- Resource requests and limits for the ingester
@@ -346,9 +351,14 @@ tempo-distributed:                                          #modified
     # -- Annotations for metrics-generator pods
     podAnnotations: {}
     # -- Additional CLI args for the metrics-generator
-    extraArgs: []
-    # -- Environment variables to add to the metrics-generator pods
-    extraEnv: []
+    extraArgs: 
+      - -config.expand-env=true
+    # -- Environment variables to add to the compactor pods
+    extraEnv: 
+      - name: MY_POD_IP
+        valueFrom:
+          fieldRef:
+            fieldPath: status.podIP
     # -- Environment variables from secrets or configmaps to add to the metrics-generator pods
     extraEnvFrom: []
     # -- Resource requests and limits for the metrics-generator
@@ -531,9 +541,14 @@ tempo-distributed:                                          #modified
     # -- Annotations for distributor pods
     podAnnotations: {}
     # -- Additional CLI args for the distributor
-    extraArgs: []
-    # -- Environment variables to add to the distributor pods
-    extraEnv: []
+    extraArgs: 
+      - -config.expand-env=true
+    # -- Environment variables to add to the compactor pods
+    extraEnv: 
+      - name: MY_POD_IP
+        valueFrom:
+          fieldRef:
+            fieldPath: status.podIP
     # -- Environment variables from secrets or configmaps to add to the distributor pods
     extraEnvFrom: []
     # -- Resource requests and limits for the distributor
@@ -674,9 +689,14 @@ tempo-distributed:                                          #modified
                   {{- include "tempo.selectorLabels" (dict "ctx" . "component" "compactor") | nindent 12 }}
               topologyKey: topology.kubernetes.io/zone
     # -- Additional CLI args for the compactor
-    extraArgs: []
+    extraArgs: 
+      - -config.expand-env=true
     # -- Environment variables to add to the compactor pods
-    extraEnv: []
+    extraEnv: 
+      - name: MY_POD_IP
+        valueFrom:
+          fieldRef:
+            fieldPath: status.podIP
     # -- Environment variables from secrets or configmaps to add to the compactor pods
     extraEnvFrom: []
     # -- Init containers to add to the compactor pod
@@ -771,9 +791,14 @@ tempo-distributed:                                          #modified
     # -- Annotations for querier pods
     podAnnotations: {}
     # -- Additional CLI args for the querier
-    extraArgs: []
-    # -- Environment variables to add to the querier pods
-    extraEnv: []
+    extraArgs: 
+      - -config.expand-env=true
+    # -- Environment variables to add to the compactor pods
+    extraEnv: 
+      - name: MY_POD_IP
+        valueFrom:
+          fieldRef:
+            fieldPath: status.podIP
     # -- Environment variables from secrets or configmaps to add to the querier pods
     extraEnvFrom: []
     # -- Resource requests and limits for the querier
@@ -857,9 +882,14 @@ tempo-distributed:                                          #modified
       # -- Resource requests and limits for the query
       resources: {}
       # -- Additional CLI args for tempo-query pods
-      extraArgs: []
-      # -- Environment variables to add to the tempo-query pods
-      extraEnv: []
+      extraArgs: 
+        - -config.expand-env=true
+      # -- Environment variables to add to the compactor pods
+      extraEnv: 
+        - name: MY_POD_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
       # -- Environment variables from secrets or configmaps to add to the tempo-query pods
       extraEnvFrom: []
       # -- Extra volumes for tempo-query pods
@@ -976,9 +1006,14 @@ tempo-distributed:                                          #modified
     # -- Annotations for query-frontend pods
     podAnnotations: {}
     # -- Additional CLI args for the query-frontend
-    extraArgs: []
-    # -- Environment variables to add to the query-frontend pods
-    extraEnv: []
+    extraArgs: 
+      - -config.expand-env=true
+    # -- Environment variables to add to the compactor pods
+    extraEnv: 
+      - name: MY_POD_IP
+        valueFrom:
+          fieldRef:
+            fieldPath: status.podIP
     # -- Environment variables from secrets or configmaps to add to the query-frontend pods
     extraEnvFrom: []
     # -- Resource requests and limits for the query-frontend
@@ -1083,9 +1118,14 @@ tempo-distributed:                                          #modified
     # -- Annotations for federation-frontend pods
     podAnnotations: {}
     # -- Additional CLI args for the federation-frontend
-    extraArgs: []
-    # -- Environment variables to add to the federation-frontend pods
-    extraEnv: []
+    extraArgs: 
+      - -config.expand-env=true
+    # -- Environment variables to add to the compactor pods
+    extraEnv: 
+      - name: MY_POD_IP
+        valueFrom:
+          fieldRef:
+            fieldPath: status.podIP
     # -- Environment variables from secrets or configmaps to add to the federation-frontend pods
     extraEnvFrom: []
     # -- Resource requests and limits for the federation-frontend
@@ -1464,6 +1504,8 @@ tempo-distributed:                                          #modified
       {{- with .Values.memberlist }}
         {{- toYaml . | nindent 2 }}
       {{- end }}
+      bind_addr:
+        - ${MY_POD_IP}
       join_members:
         - dns+{{ include "tempo.fullname" . }}-gossip-ring:{{ .Values.memberlist.bind_port }}
     overrides:
@@ -1609,9 +1651,14 @@ tempo-distributed:                                          #modified
     # Number of replicas for memchached
     replicas: 1
     # -- Additional CLI args for memcached
-    extraArgs: []
-    # -- Toleration for memcached pods
-    tolerations: []
+    extraArgs: 
+      - -config.expand-env=true
+    # -- Environment variables to add to the compactor pods
+    extraEnv: 
+      - name: MY_POD_IP
+        valueFrom:
+          fieldRef:
+            fieldPath: status.podIP
     # -- Environment variables to add to memcached pods
     extraEnv: []
     # -- Environment variables from secrets or configmaps to add to memcached pods
@@ -1678,7 +1725,14 @@ tempo-distributed:                                          #modified
       # -- Memcached Exporter resource requests and limits
     resources: {}
     # -- Additional CLI args for the memcached exporter
-    extraArgs: []
+    extraArgs: 
+      - -config.expand-env=true
+    # -- Environment variables to add to the compactor pods
+    extraEnv: 
+      - name: MY_POD_IP
+        valueFrom:
+          fieldRef:
+            fieldPath: status.podIP
   metaMonitoring:
     # ServiceMonitor configuration
     serviceMonitor:
@@ -1880,9 +1934,14 @@ tempo-distributed:                                          #modified
     # -- Annotations for gateway pods
     podAnnotations: {}
     # -- Additional CLI args for the gateway
-    extraArgs: []
-    # -- Environment variables to add to the gateway pods
-    extraEnv: []
+    extraArgs: 
+      - -config.expand-env=true
+    # -- Environment variables to add to the compactor pods
+    extraEnv: 
+      - name: MY_POD_IP
+        valueFrom:
+          fieldRef:
+            fieldPath: status.podIP
     # -- Environment variables from secrets or configmaps to add to the gateway pods
     extraEnvFrom: []
     # -- Volumes to add to the gateway pods
