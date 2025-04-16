@@ -1,4 +1,4 @@
-alertmanager: 
+alertmanager:
   # yaml-language-server: $schema=values.schema.json
   # Default values for alertmanager.
   # This is a YAML-formatted file.
@@ -19,7 +19,8 @@ alertmanager:
   # Full external URL where alertmanager is reachable, used for backlinks.
   baseURL: ""
 
-  extraArgs: {}
+  extraArgs:
+    cluster.advertise-address: "[$(POD_IP)]:9093"
 
   ## Additional Alertmanager Secret mounts
   # Defines additional mounts with secrets. Secrets must be manually created in the namespace.
@@ -289,13 +290,13 @@ alertmanager:
 
   config:
     enabled: true
-    global: 
+    global:
       resolve_timeout: 5m
       # slack_api_url: ''
 
     templates:
       - '/etc/alertmanager/*.tmpl'
-    
+
 
     route:
       group_by: ['alertname']
@@ -304,7 +305,7 @@ alertmanager:
       receiver: 'msteams'
       repeat_interval: 1h
 
-      
+
 
       routes:
       - receiver: 'msteams'
@@ -315,12 +316,12 @@ alertmanager:
       # - receiver: 'email'
       #   matchers:
       #     - 'severity=critical'
-    
+
 
     receivers:
       - name: 'null'
       - name: 'msteams'
-        webhook_configs: 
+        webhook_configs:
         - url: 'http://prometheus-msteams:2000/bar'
           send_resolved: true
           http_config:
@@ -352,7 +353,7 @@ alertmanager:
           #     {{ end }}
 
           # text: '{{ template "msteams.alert" . }}'
-          
+
 
 
         # email_configs:
