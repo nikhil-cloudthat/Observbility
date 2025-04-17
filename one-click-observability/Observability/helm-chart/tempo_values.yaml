@@ -1635,7 +1635,7 @@ tempo-distributed:                                          #modified
     # fullnameOverride: "tempo-memcached"
     # nameOverride: ""
     # -- Specified whether the memcached cachce should be enabled
-    enabled: true
+    enabled: false
     image:
       # -- The Docker registry for the Memcached image. Overrides `global.image.registry`
       registry: null
