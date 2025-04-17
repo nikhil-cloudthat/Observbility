@@ -1684,7 +1684,7 @@ grafana:
                     "refId": "A"
                   }
                 ],
-                "title": "Kubernetes Resources Logs",
+                "title": "Fluent Bit: Cluster Logs",
                 "type": "logs"
               }
             ],
