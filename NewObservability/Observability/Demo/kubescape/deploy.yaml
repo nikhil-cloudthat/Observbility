@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-app
+  labels:
+    app: python-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: python-app
+  template:
+    metadata:
+      labels:
+        app: python-app
+    spec:
+      containers:
+      - name: python-app-contianer
+        image: gokuraj/kubescape:json6                        #  gokuraj/kubescape:json4 and json6 image working good json5 is not working
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8000
+        volumeMounts:
+        - mountPath: /app/data
+          name: json-file
+      volumes:
+      - name: json-file
+        persistentVolumeClaim:
+          claimName: json-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: python-app
+spec:
+  selector:
+    app: python-app
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000
+  type: ClusterIP

@@ -1,0 +1,25 @@
+replicaCount: 1
+namespace: default
+image:
+  repository: gokuraj/kubescape
+  tag: "v6"
+  pullPolicy: Always
+
+service:
+  type: ClusterIP
+  port: 8000
+
+volume:
+  size: 50Mi
+  storageClassName: hostpath
+  hostPath: /home/kubescape-results
+
+cronjob:
+  # image: bitnami/kubescape:latest
+  # outputPath: /app/data/resv2.json
+  interval: "1m"                # Friendly option like "6m", "2h", "1d"
+  schedule: ""                  # Optional raw cron expression (overrides interval if set)
+
+
+rbac:
+  serviceAccountName: kubescape-sa

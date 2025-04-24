@@ -1,0 +1,12 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: kubescape-reader-binding
+subjects:
+  - kind: ServiceAccount
+    name: {{ .Values.rbac.serviceAccountName }}
+    namespace: {{ .Release.Namespace }}
+roleRef:
+  kind: ClusterRole
+  name: kubescape-reader
+  apiGroup: rbac.authorization.k8s.io

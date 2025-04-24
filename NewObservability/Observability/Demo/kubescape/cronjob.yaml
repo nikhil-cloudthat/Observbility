@@ -1,0 +1,63 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: kubescape-scheduler
+  namespace: default
+spec:
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: kubescape-scheduler
+            image: quay.io/kubescape/http-request:v0.2.11
+            args:
+            - -X
+            - POST
+            - -H
+            - "Content-Type: application/json"
+            - -d
+            - '{"commands":[{"CommandName":"kubescapeScan","args":{"scanV1":{}}}]}'
+            - http://kubescape:8080/api/v1/scan  # Corrected URL
+            env:
+            - name: INSECURE_SKIP_TLS_VERIFY
+              value: "true"
+            resources:
+              requests:
+                cpu: 1m
+                memory: 10Mi
+              limits:
+                cpu: 10m
+                memory: 20Mi
+          restartPolicy: OnFailure
+          nodeSelector:
+            kubernetes.io/os: linux
+
+
+###############################################################
+
+
+# apiVersion: batch/v1
+# kind: CronJob
+# metadata:
+#   name: kubescape-scan
+# spec:
+#   schedule: "*/30 * * * *"
+#   jobTemplate:
+#     spec:
+#       template:
+#         spec:
+#           containers:
+#           - name: kubescape
+#             image: quay.io/kubescape/kubescape:v3.0.34
+#             command: ["kubescape"]
+#             args: ["scan", "--format", "json", "--output", "/app/data/resv2.json"]
+#             volumeMounts:
+#             - name: json-file
+#               mountPath: /app/data
+#           volumes:
+#           - name: json-file
+#             persistentVolumeClaim:
+#               claimName: json-pvc
+#           restartPolicy: OnFailure

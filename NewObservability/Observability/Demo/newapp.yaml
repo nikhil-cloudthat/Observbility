@@ -1,0 +1,54 @@
+---
+# Docker Hub Image Pull Secret
+apiVersion: v1
+kind: Secret
+metadata:
+  name: dockerhub-secret
+  namespace: default
+type: kubernetes.io/dockerconfigjson
+data:
+  .dockerconfigjson: ewoJImF1dGhzIjogewoJCSJodHRwczovL2luZGV4LmRvY2tlci5pby92MS8iOiB7CgkJCSJhdXRoIjogIloyOXJkWEpoYWpwQ2FHRnphSGxoYlVBeCIKCQl9Cgl9Cn0=
+---
+# Deployment for the Flask Application
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-app
+  namespace: default
+  labels:
+    app: flask-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flask-app
+  template:
+    metadata:
+      labels:
+        app: flask-app
+    spec:
+      # Reference the Docker Hub secret so that image pulls are authenticated
+      imagePullSecrets:
+      - name: dockerhub-secret
+      containers:
+      - name: flask-app
+        image: gokuraj/newapp:3                       # gokuraj/app:3 is working good   | gokuraj/newapp:2   is good
+        ports:
+        - containerPort: 5000
+        env:
+        - name: ALLOY_ENDPOINT
+          value: "http://alloy:4323"
+---
+# Service to expose the Flask Application
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask-app
+  namespace: default
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 5000
+  selector:
+    app: flask-app

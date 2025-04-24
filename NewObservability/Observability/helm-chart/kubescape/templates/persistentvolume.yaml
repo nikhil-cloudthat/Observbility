@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: json-pv
+spec:
+  capacity:
+    storage: {{ .Values.volume.size }}
+  accessModes:
+    - ReadWriteMany
+  storageClassName: {{ .Values.volume.storageClassName }}
+  hostPath:
+    path: {{ .Values.volume.hostPath }}
+    type: DirectoryOrCreate

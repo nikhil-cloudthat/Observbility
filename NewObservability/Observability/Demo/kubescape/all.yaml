@@ -1,0 +1,160 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-app
+  labels:
+    app: python-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: python-app
+  template:
+    metadata:
+      labels:
+        app: python-app
+    spec:
+      containers:
+      - name: python-app-contianer
+        image: gokuraj/kubescape:5                        #  gokuraj/kubescape:json4 and json6 image working good json5 is not working
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8000
+        volumeMounts:
+        - mountPath: /app/data
+          name: json-file
+      volumes:
+      - name: json-file
+        persistentVolumeClaim:
+          claimName: json-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: python-app
+spec:
+  selector:
+    app: python-app
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000
+  type: ClusterIP
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: json-pv
+spec:
+  capacity:
+    storage: 50Mi
+  accessModes:
+    - ReadWriteMany
+  storageClassName: hostpath  # Match this with the PVC
+  hostPath:
+    path: /home/kubescape-results  # Changed to a directory
+    type: DirectoryOrCreate
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: json-pvc
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 50Mi
+  storageClassName: hostpath  # Match this with the PV
+  volumeName: json-pv  # Explicitly bind to the PV
+
+
+---
+
+# apiVersion: batch/v1
+# kind: CronJob
+# metadata:
+#   name: kubescape-scan
+# spec:
+#   schedule: "*/1 * * * *"
+#   jobTemplate:
+#     spec:
+#       template:
+#         spec:
+#           containers:
+#           - name: kubescape
+#             image: quay.io/kubescape/kubescape:v3.0.34
+#             command: ["kubescape"]
+#             args: ["scan", "--format", "json", "--output", "/app/data/resv2.json"]
+#             volumeMounts:
+#             - name: json-file
+#               mountPath: /app/data
+#           volumes:
+#           - name: json-file
+#             persistentVolumeClaim:
+#               claimName: json-pvc
+#           restartPolicy: OnFailure
+
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: kubescape-scan
+spec:
+  schedule: "*/1 * * * *"  # Runs every 1 minute
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: kubescape-sa
+          containers:
+          - name: kubescape
+            image: bitnami/kubescape:latest
+            command: ["/bin/sh"]
+            args:
+              - "-c"
+              - >
+                kubescape scan framework nsa --format json --output /app/data/resv2.json
+            securityContext:
+              runAsUser: 0
+            volumeMounts:
+            - name: json-file
+              mountPath: /app/data
+          volumes:
+          - name: json-file
+            persistentVolumeClaim:
+              claimName: json-pvc
+          restartPolicy: OnFailure
+
+---
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: kubescape-sa
+  namespace: default  # Adjust to your namespace
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: kubescape-reader
+rules:
+- apiGroups: ["*"]
+  resources: ["*"]
+  verbs: ["get", "list", "watch"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: kubescape-reader-binding
+subjects:
+- kind: ServiceAccount
+  name: kubescape-sa
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: kubescape-reader
+  apiGroup: rbac.authorization.k8s.io
