@@ -1,0 +1,71 @@
+# apiVersion: batch/v1
+# kind: CronJob
+# metadata:
+#   name: kubescape-scan
+#   namespace: {{ .Release.Namespace }}
+#   annotations:
+#     schedule-note: "Converted from '{{ .Values.cronjob.interval }}'"
+# spec:
+#   schedule: "{{ include "cronjob.schedule" . }}"
+#   jobTemplate:
+#     spec:
+#       template:
+#         spec:
+#           serviceAccountName: {{ .Values.rbac.serviceAccountName }}
+#           containers:
+#             - name: kubescape
+#               image: bitnami/kubescape:latest
+#               command: ["/bin/sh"]
+#               args:
+#                 - "-c"
+#                 - |
+#                   ts=$(date +%Y%m%d_%H%M%S)
+#                   kubescape scan framework all \
+#                     --format json \
+#                     --output /app/data/resv2_${ts}.json
+#               securityContext:
+#                 runAsUser: 0
+#               volumeMounts:
+#                 - name: json-file
+#                   mountPath: /app/data
+#           volumes:
+#             - name: json-file
+#               persistentVolumeClaim:
+#                 claimName: json-pvc
+#           restartPolicy: OnFailure
+
+
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: kubescape-scan
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    schedule-note: "Converted from '{{ .Values.cronjob.interval }}'"
+spec:
+  schedule: "{{ include "cronjob.schedule" . }}"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: {{ .Values.rbac.serviceAccountName }}
+          containers:
+            - name: kubescape
+              image: bitnami/kubescape:latest
+              command: ["/bin/sh"]
+              args:
+                - "-c"
+                - |
+                  kubescape scan framework all \
+                    --format json \
+                    --output /app/data/resv3.json
+              securityContext:
+                runAsUser: 0
+              volumeMounts:
+                - name: json-file
+                  mountPath: /app/data
+          volumes:
+            - name: json-file
+              persistentVolumeClaim:
+                claimName: json-pvc
+          restartPolicy: OnFailure

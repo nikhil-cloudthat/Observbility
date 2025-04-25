@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: json-pv
+spec:
+  capacity:
+    storage: 50Mi
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: hostpath  # Match this with the PVC
+  hostPath:
+    path: /home/nikhil/resv2.json
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: json-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Mi
+  storageClassName: hostpath  # Match this with the PV
+  volumeName: json-pv  # Explicitly bind to the PV
