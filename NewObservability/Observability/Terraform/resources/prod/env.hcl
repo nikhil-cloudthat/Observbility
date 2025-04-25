@@ -12,5 +12,4 @@ locals {
   eks_controlplane_subnet_az2 = "subnet-04de36b3c9d931aaf"
 
   project_name = "Obs"
-
   }

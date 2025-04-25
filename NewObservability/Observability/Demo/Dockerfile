@@ -1,14 +1,21 @@
-FROM python:3.9-slim
+FROM python:3.10-slim
 
+# Set working directory
 WORKDIR /app
 
-COPY requirements.txt requirements.txt
-RUN apt-get update -y
-RUN apt install curl -y
-RUN pip install -r requirements.txt
-RUN pip install --upgrade pip
-RUN pip install Flask opentelemetry-api opentelemetry-sdk opentelemetry-instrumentation-flask opentelemetry-exporter-otlp opentelemetry-instrumentation-logging
+# Install system dependencies
+RUN apt-get update -y && \
+    apt-get install -y curl && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
-COPY testing.py testing.py
+# Copy requirements and install dependencies
+COPY requirements.txt .
 
-CMD ["python", "testing.py"]
+# Upgrade pip and install dependencies
+RUN pip install --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
+
+COPY sample-app.py sample-app.py
+
+CMD ["python", "sample-app.py"]

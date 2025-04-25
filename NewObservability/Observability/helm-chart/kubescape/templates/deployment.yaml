@@ -13,6 +13,8 @@ spec:
       labels:
         app: python-app
     spec:
+      imagePullSecrets:
+      - name: dockerhub-secret
       containers:
         - name: python-app-container
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"

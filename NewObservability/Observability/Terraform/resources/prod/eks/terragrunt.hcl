@@ -65,5 +65,4 @@ inputs = {
 
     namespace = "default"
     release_name = "obs"
-    
 }

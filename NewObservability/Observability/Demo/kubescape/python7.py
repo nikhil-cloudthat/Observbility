@@ -82,8 +82,8 @@ def parse_json_and_update_metrics():
         if name == 'AllControls':
             total_compliance_gauge.set(score)
 
-    # Set severity counts from controlsSeverityCounters
-    severity_counters = data.get('summaryDetails', {}).get('controlsSeverityCounters', {})
+    # Set severity counts from resourcesSeverityCounters
+    severity_counters = data.get('summaryDetails', {}).get('resourcesSeverityCounters', {})
     for severity in ['critical', 'high', 'medium', 'low']:
         count = severity_counters.get(f'{severity}Severity', 0)
         severity_gauge.labels(severity=severity.capitalize()).set(count)

@@ -32,7 +32,7 @@ spec:
       - name: dockerhub-secret
       containers:
       - name: flask-app
-        image: gokuraj/newapp:3                       # gokuraj/app:3 is working good   | gokuraj/newapp:2   is good
+        image: gokuraj/app:v1                       # gokuraj/app:3 is working good   | gokuraj/newapp:2   is good
         ports:
         - containerPort: 5000
         env:
@@ -46,7 +46,7 @@ metadata:
   name: flask-app
   namespace: default
 spec:
-  type: NodePort
+  type: LoadBalancer
   ports:
   - port: 80
     targetPort: 5000
