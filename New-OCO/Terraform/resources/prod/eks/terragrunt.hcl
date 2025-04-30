@@ -63,6 +63,6 @@ inputs = {
     project_name = include.env.locals.project_name
 
 
-    namespace = "default"
-    release_name = "obs"
+    sc_name = "gp2"
+    sc_type = "gp2"
 }
