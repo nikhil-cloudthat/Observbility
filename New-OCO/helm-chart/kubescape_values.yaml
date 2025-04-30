@@ -12,7 +12,7 @@ kubescape:
 
   volume:
     size: 50Mi
-    storageClassName: hostpath
+    storageClassName: gp2
     hostPath: /home/kubescape-results
 
   cronjob:
