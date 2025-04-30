@@ -120,7 +120,7 @@ resource "kubernetes_storage_class" "gp2" {
     }
   }
 
-  provisioner = "kubernetes.io/aws-ebs"
+  storage_provisioner = "kubernetes.io/aws-ebs"
 
   parameters = {
     type   = var.sc_type
