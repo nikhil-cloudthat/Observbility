@@ -546,7 +546,7 @@ prometheus:
       ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
       ##   GKE, AWS & OpenStack)
       ##
-      # storageClass: "-"       # For statefulset, choose different storage classes. For Local machine standard / comment this line, for manual contorl of storage, "-"
+      storageClass: "gp2"       # For statefulset, choose different storage classes. For Local machine standard / comment this line, for manual contorl of storage, "-"
 
       ## Prometheus server data Persistent Volume Binding Mode
       ## If defined, volumeBindingMode: <volumeBindingMode>
