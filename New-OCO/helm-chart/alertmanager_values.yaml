@@ -272,7 +272,7 @@ alertmanager:
     ## If undefined (the default) or set to null, no storageClassName spec is
     ## set, choosing the default provisioner.
     ##
-    # storageClass: "-"
+    storageClass: "gp2"
     accessModes:
       - ReadWriteOnce
     size: 50Mi
