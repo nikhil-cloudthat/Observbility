@@ -1,3 +1,4 @@
+
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 locals {
@@ -71,9 +72,11 @@ module "eks" {
     }
     vpc-cni                = {
       most_recent = true
+      service_account_role_name = "AmazonEKSPodIdentityVPC_CNI_Role"
     }
     aws-ebs-csi-driver     = {
       most_recent = true
+      service_account_role_name = "AmazonEKSPodIdentityAmazonEBSCSIDriverRole"
     }
     eks-pod-identity-agent = {
       most_recent = true
@@ -109,52 +112,25 @@ module "eks" {
 
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+resource "kubernetes_storage_class" "gp2" {
+  metadata {
+    name = var.sc_name
+    annotations = {
+      "storageclass.kubernetes.io/is-default-class" = "true"
+    }
+  }
 
-#locals {
-  # Given that your terragrunt.hcl is in Repository/Terraform/resources/prod,
-  # go 3 levels up to reach the repository root.
-#  repo_root = abspath("${get_terragrunt_dir()}/../../..")
-#}
+  provisioner = "kubernetes.io/aws-ebs"
 
-#inputs = {
-#  repo_root = local.repo_root
-#}
+  parameters = {
+    type   = var.sc_type
+    fsType = "ext4"
+  }
 
+  reclaim_policy         = "Delete"
+  volume_binding_mode    = "WaitForFirstConsumer"
+  allow_volume_expansion = true  # Optional but often useful
 
+  depends_on = [module.eks]
+}
 
-#resource "helm_release" "obs" {
-#  name      = var.release_name
-#  chart     = "${var.repo_root}/helm-chart"
-#  namespace = var.namespace
-
-  # Replicate the -f flags from your helm command. Use the repo_root variable.
-#  values = [
-#    file("${var.repo_root}/helm-chart/prometheus.yaml"),
-#    file("${var.repo_root}/helm-chart/alertmanager_values.yaml"),
-#    file("${var.repo_root}/helm-chart/alloy_values.yaml"),
-#    file("${var.repo_root}/helm-chart/fluentbit_values.yaml"),
-#    file("${var.repo_root}/helm-chart/grafana_values.yaml"),
-#    file("${var.repo_root}/helm-chart/kubescape_values.yaml"),
-#    file("${var.repo_root}/helm-chart/loki-distributed.yaml"),
-#    file("${var.repo_root}/helm-chart/tempo_values.yaml"),
-#    file("${var.repo_root}/helm-chart/promethus-msteams_values.yaml")
-#  ]
-
-#  dependency_update = true
-#}
-
-
-
-#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-
-#resource "null_resource" "helmfile_apply" {
-#  provisioner "local-exec" {
-#    command = <<EOT
-#      helmfile init
-#      helmfile apply -f ${path.module}/../../../helmfile/helmfile.yaml sync
-#    EOT
-#  }
-
-#  depends_on = [module.eks]  # Ensure the EKS cluster is ready
-#}
