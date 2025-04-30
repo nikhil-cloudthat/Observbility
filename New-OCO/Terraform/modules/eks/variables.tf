@@ -68,15 +68,19 @@ variable "project_name" {
 }
 
 
-#######################################################
+#-----------------------------------------------------#
+#                    Storageclass                     #
+#-----------------------------------------------------#
 
-variable "release_name" {
-  description = "Name of the helm release"
+variable "sc_name" {
+  description = "Name of the storageclass"
   type        = string
 }
 
 
-variable "namespace" {
-  description = "namespace"
+variable "sc_type" {
+  description = "Type of the storage class"
   type        = string
 }
+
+
