@@ -9,7 +9,7 @@ service:
   port: 8000
 volume:
   size: 50Mi
-  storageClassName: hostpath
+  storageClassName: gp2
   hostPath: /home/kubescape-results
 cronjob:
   # image: bitnami/kubescape:latest
