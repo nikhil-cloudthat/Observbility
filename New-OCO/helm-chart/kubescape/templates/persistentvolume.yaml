@@ -6,7 +6,7 @@
 #   capacity:
 #     storage: {{ .Values.volume.size }}
 #   accessModes:
-#     - ReadWriteMany
+#     - ReadWriteOnce
 #   storageClassName: {{ .Values.volume.storageClassName }}
 #   hostPath:
 #     path: {{ .Values.volume.hostPath }}
