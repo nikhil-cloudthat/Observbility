@@ -10,4 +10,4 @@ spec:
     requests:
       storage: {{ .Values.volume.size }}
   storageClassName: {{ .Values.volume.storageClassName }}
-  volumeName: json-pv
+  # volumeName: json-pv
