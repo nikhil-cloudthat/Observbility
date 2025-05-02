@@ -15,20 +15,20 @@ variable "repo_root" {
   type        = string
 }
 
-variable "grafana_password" {
-  type      = string
-  sensitive = true
-}
+# variable "grafana_password" {
+#   type      = string
+#   sensitive = true
+# }
 
-variable "dockerhub_username" {
-  type      = string
-  sensitive = true  # This marks the variable as sensitive
-}
+# variable "dockerhub_username" {
+#   type      = string
+#   sensitive = true  # This marks the variable as sensitive
+# }
 
-variable "dockerhub_password" {
-  type      = string
-  sensitive = true  # This marks the variable as sensitive
-}
+# variable "dockerhub_password" {
+#   type      = string
+#   sensitive = true  # This marks the variable as sensitive
+# }
 
 variable "cluster_name" {
   description = "Name of the cluster"
