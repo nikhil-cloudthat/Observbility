@@ -112,25 +112,24 @@ module "eks" {
 
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-resource "kubernetes_storage_class" "gp2" {
-  metadata {
-    name = var.sc_name
-    annotations = {
-      "storageclass.kubernetes.io/is-default-class" = "true"
-    }
-  }
+# resource "kubernetes_storage_class" "gp2" {
+#   metadata {
+#     name = var.sc_name
+#     annotations = {
+#       "storageclass.kubernetes.io/is-default-class" = "true"
+#     }
+#   }
 
-  storage_provisioner = "kubernetes.io/aws-ebs"
+#   provisioner = "kubernetes.io/aws-ebs"
 
-  parameters = {
-    type   = var.sc_type
-    fsType = "ext4"
-  }
+#   parameters = {
+#     type   = var.sc_type
+#     fsType = "ext4"
+#   }
 
-  reclaim_policy         = "Delete"
-  volume_binding_mode    = "WaitForFirstConsumer"
-  allow_volume_expansion = true  # Optional but often useful
+#   reclaim_policy         = "Delete"
+#   volume_binding_mode    = "WaitForFirstConsumer"
+#   allow_volume_expansion = true  # Optional but often useful
 
-  depends_on = [module.eks]
-}
-
+#   depends_on = [module.eks]
+# }
