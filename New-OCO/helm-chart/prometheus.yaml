@@ -1308,6 +1308,10 @@ prometheus:
       static_configs:
         - targets:
           - https://google.com
+          - https://cloudthat.com
+          - https://youtube.com
+          - https://microsoft.com
+          - https://facebook.com
       relabel_configs:
         - source_labels: [__address__]
           target_label: __param_target
