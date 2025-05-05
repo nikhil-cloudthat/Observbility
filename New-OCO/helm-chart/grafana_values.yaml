@@ -882,9 +882,13 @@ grafana:
   ##
   dashboards: 
     default:                                        # modified
-      # imported-dashboard-name:                    # import dashboards
-      #   gnetId: 21960
-      #   datasource: Prometheus  
+      imported-dashboard-name:                    # import dashboards
+         gnetId: 7587
+         datasource: Prometheus
+         gnetId: 21742
+         datasource: Prometheus
+         gnetId: 1860
+         datasource: Prometheus         
       # custom-dashboard:                               # folder type dashboards
       #   file: .\dashboards\monitoring.json 
       app-dashboard:                             # modified
