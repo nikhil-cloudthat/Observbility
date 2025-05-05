@@ -847,7 +847,7 @@ prometheus:
         alertmanagers:
           - static_configs:
               - targets:
-                  - 'alertmanager.default.svc.cluster.local:9093'
+                  - 'alertmanager.{{.Release.Namespace}}.svc.cluster.local:9093'
             tls_config:
               ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
 
@@ -857,6 +857,7 @@ prometheus:
             - targets:
               - localhost:9090
 
+        
         - job_name: 'json_metrics'
           kubernetes_sd_configs:
             - role: service
@@ -888,6 +889,8 @@ prometheus:
             - source_labels: [__meta_kubernetes_service_name]
               action: replace
               target_label: service
+
+          
         # A scrape configuration for running Prometheus on a Kubernetes cluster.
         # This uses separate scrape configs for cluster components (i.e. API server, node)
         # and services to allow each to use different authentication configs.
@@ -1297,21 +1300,21 @@ prometheus:
   # adds additional scrape configs to prometheus.yml
   # must be a string so you have to add a | after extraScrapeConfigs:
   # example adds prometheus-blackbox-exporter scrape config
-  extraScrapeConfigs: ""
-    # - job_name: 'prometheus-blackbox-exporter'
-    #   metrics_path: /probe
-    #   params:
-    #     module: [http_2xx]
-    #   static_configs:
-    #     - targets:
-    #       - https://example.com
-    #   relabel_configs:
-    #     - source_labels: [__address__]
-    #       target_label: __param_target
-    #     - source_labels: [__param_target]
-    #       target_label: instance
-    #     - target_label: __address__
-    #       replacement: prometheus-blackbox-exporter:9115
+  extraScrapeConfigs: 
+    - job_name: 'prometheus-blackbox-exporter'
+      metrics_path: /probe
+      params:
+        module: [http_2xx]
+      static_configs:
+        - targets:
+          - https://google.com
+      relabel_configs:
+        - source_labels: [__address__]
+          target_label: __param_target
+        - source_labels: [__param_target]
+          target_label: instance
+        - target_label: __address__
+          replacement: prometheus-blackbox-exporter:9115
 
   # Adds option to add alert_relabel_configs to avoid duplicate alerts in alertmanager
   # useful in H/A prometheus with different external labels but the same alerts
