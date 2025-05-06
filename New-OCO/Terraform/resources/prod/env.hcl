@@ -2,7 +2,7 @@ locals {
   environment_name = "Dev"
   region = "ap-south-1"
   vpc_id = "vpc-05a2ee1bd60533eed"
-  vpc_cidr = "182.0.0.0/16"
+  vpc_cidr = "10.0.0.0/16"
 
   karpenter_tag_key = "karpenter.sh/discovery"
 
