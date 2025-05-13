@@ -173,7 +173,10 @@ tempo-distributed:                                          #modified
     # -- Environment variables from secrets or configmaps to add to the ingester pods
     extraEnvFrom: []
     # -- Resource requests and limits for the ingester
-    resources: {}
+    resources:
+      limits:
+        cpu: "10m"
+        memory: "31Mi"
     # -- Grace period to allow the ingester to shutdown before it is killed. Especially for the ingestor,
     # this must be increased. It must be long enough so ingesters can be gracefully shutdown flushing/transferring
     # all data and to successfully leave the member ring on shutdown.
@@ -552,7 +555,10 @@ tempo-distributed:                                          #modified
     # -- Environment variables from secrets or configmaps to add to the distributor pods
     extraEnvFrom: []
     # -- Resource requests and limits for the distributor
-    resources: {}
+    resources:
+      limits:
+        cpu: "10m"
+        memory: "30Mi"
     # -- Grace period to allow the distributor to shutdown before it is killed
     terminationGracePeriodSeconds: 30
     # -- topologySpread for distributor pods. Passed through `tpl` and, thus, to be configured as string
@@ -704,7 +710,10 @@ tempo-distributed:                                          #modified
     # -- Containers to add to the compactor pod
     extraContainers: []
     # -- Resource requests and limits for the compactor
-    resources: {}
+    resources:
+      limits:
+        cpu: "10m"
+        memory: "28Mi"
     # -- Grace period to allow the compactor to shutdown before it is killed
     terminationGracePeriodSeconds: 30
     # -- Pod Disruption Budget maxUnavailable
@@ -802,7 +811,10 @@ tempo-distributed:                                          #modified
     # -- Environment variables from secrets or configmaps to add to the querier pods
     extraEnvFrom: []
     # -- Resource requests and limits for the querier
-    resources: {}
+    resources:
+      limits:
+        cpu: "10m"
+        memory: "35Mi"
     # -- Grace period to allow the querier to shutdown before it is killed
     terminationGracePeriodSeconds: 30
     # -- topologySpread for querier pods. Passed through `tpl` and, thus, to be configured as string
@@ -880,7 +892,10 @@ tempo-distributed:                                          #modified
         # -- Docker image tag for the tempo-query image. Overrides `tempo.image.tag`
         tag: null
       # -- Resource requests and limits for the query
-      resources: {}
+      resources:
+      limits:
+        cpu: "10m"
+        memory: "27Mi"
       # -- Additional CLI args for tempo-query pods
       extraArgs: 
         - -config.expand-env=true
@@ -1017,7 +1032,10 @@ tempo-distributed:                                          #modified
     # -- Environment variables from secrets or configmaps to add to the query-frontend pods
     extraEnvFrom: []
     # -- Resource requests and limits for the query-frontend
-    resources: {}
+    resources:
+      limits:
+        cpu: "10m"
+        memory: "27Mi"
     # -- Grace period to allow the query-frontend to shutdown before it is killed
     terminationGracePeriodSeconds: 30
     # -- topologySpread for query-frontend pods. Passed through `tpl` and, thus, to be configured as string

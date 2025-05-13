@@ -199,9 +199,10 @@ prometheus-blackbox-exporter:
     #   readOnly: true
     #   defaultMode: 420
 
-  resources: {}
-    # limits:
-    #   memory: 300Mi
+  resources:
+     limits:
+       memory: "20Mi"
+       cpu: "10m"
     # requests:
     #   memory: 50Mi
 

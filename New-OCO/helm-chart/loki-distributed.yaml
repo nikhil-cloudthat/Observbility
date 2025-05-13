@@ -466,13 +466,16 @@ loki-distributed:                                       # modified
           fieldRef:
             fieldPath: status.podIP
     # -- Environment variables from secrets or configmaps to add to the ingester pods
-    extraEnvFrom: []
+    
     # -- Volume mounts to add to the ingester pods
     extraVolumeMounts: []
     # -- Volumes to add to the ingester pods
     extraVolumes: []
     # -- Resource requests and limits for the ingester
-    resources: {}
+    resources:
+      limits:
+        cpu: "24m"
+        memory: "92Mi"
     # -- Containers to add to the ingester pods
     extraContainers: []
     # -- Init containers to add to the ingester pods
@@ -613,13 +616,16 @@ loki-distributed:                                       # modified
           fieldRef:
             fieldPath: status.podIP
     # -- Environment variables from secrets or configmaps to add to the distributor pods
-    extraEnvFrom: []
+    
     # -- Volume mounts to add to the distributor pods
     extraVolumeMounts: []
     # -- Volumes to add to the distributor pods
     extraVolumes: []
     # -- Resource requests and limits for the distributor
-    resources: {}
+    resources:
+      limits:
+        cpu: "10m"
+        memory: "37Mi"
     # -- Containers to add to the distributor pods
     extraContainers: []
     # -- Grace period to allow the distributor to shutdown before it is killed
@@ -720,14 +726,16 @@ loki-distributed:                                       # modified
           fieldRef:
             fieldPath: status.podIP
     # -- Environment variables from secrets or configmaps to add to the querier pods
-    extraEnvFrom: []
+    
     # -- Volume mounts to add to the querier pods
     extraVolumeMounts: []
     # -- Volumes to add to the querier pods
     extraVolumes: []
     # -- Resource requests and limits for the querier
-    resources: {}
-    # -- Containers to add to the querier pods
+    resources:
+      limits:
+        cpu: "10m"
+        memory: "60Mi"
     extraContainers: []
     # -- Init containers to add to the querier pods
     initContainers: []
@@ -853,13 +861,16 @@ loki-distributed:                                       # modified
           fieldRef:
             fieldPath: status.podIP
     # -- Environment variables from secrets or configmaps to add to the query-frontend pods
-    extraEnvFrom: []
+    
     # -- Volume mounts to add to the query-frontend pods
     extraVolumeMounts: []
     # -- Volumes to add to the query-frontend pods
     extraVolumes: []
     # -- Resource requests and limits for the query-frontend
-    resources: {}
+    resources:
+      limits:
+        cpu: "10m"
+        memory: "27Mi"
     # -- Containers to add to the query-frontend pods
     extraContainers: []
     # -- Grace period to allow the query-frontend to shutdown before it is killed
@@ -933,7 +944,7 @@ loki-distributed:                                       # modified
           fieldRef:
             fieldPath: status.podIP
     # -- Environment variables from secrets or configmaps to add to the query-scheduler pods
-    extraEnvFrom: []
+    
     # -- Volume mounts to add to the query-scheduler pods
     extraVolumeMounts: []
     # -- Volumes to add to the query-scheduler pods
@@ -1008,7 +1019,7 @@ loki-distributed:                                       # modified
           fieldRef:
             fieldPath: status.podIP
     # -- Environment variables from secrets or configmaps to add to the table-manager pods
-    extraEnvFrom: []
+    
     # -- Volume mounts to add to the table-manager pods
     extraVolumeMounts: []
     # -- Volumes to add to the table-manager pods
@@ -1148,7 +1159,7 @@ loki-distributed:                                       # modified
           fieldRef:
             fieldPath: status.podIP
     # -- Environment variables from secrets or configmaps to add to the gateway pods
-    extraEnvFrom: []
+    
     # -- Volumes to add to the gateway pods
     extraVolumes: []
     # -- Volume mounts to add to the gateway pods
@@ -1167,7 +1178,10 @@ loki-distributed:                                       # modified
           - ALL
       allowPrivilegeEscalation: false
     # -- Resource requests and limits for the gateway
-    resources: {}
+    resources:
+      limits:
+        cpu: "10m"
+        memory: "20Mi"
     # -- Containers to add to the gateway pods
     extraContainers: []
     # -- Grace period to allow the gateway to shutdown before it is killed
@@ -1466,7 +1480,7 @@ loki-distributed:                                       # modified
           fieldRef:
             fieldPath: status.podIP
     # -- Environment variables from secrets or configmaps to add to the compactor pods
-    extraEnvFrom: []
+    
     # -- Volume mounts to add to the compactor pods
     extraVolumeMounts: []
     # -- Volumes to add to the compactor pods
@@ -1476,7 +1490,10 @@ loki-distributed:                                       # modified
     # -- liveness probe settings for ingester pods. If empty use `loki.livenessProbe`
     livenessProbe: {}
     # -- Resource requests and limits for the compactor
-    resources: {}
+    resources:
+      limits:
+        cpu: "10m"
+        memory: "29Mi"
     # -- Containers to add to the compactor pods
     extraContainers: []
     # -- Init containers to add to the compactor pods
@@ -1573,7 +1590,7 @@ loki-distributed:                                       # modified
           fieldRef:
             fieldPath: status.podIP
     # -- Environment variables from secrets or configmaps to add to the ruler pods
-    extraEnvFrom: []
+    
     # -- Volume mounts to add to the ruler pods
     extraVolumeMounts: []
     # -- Volumes to add to the ruler pods
@@ -1735,13 +1752,16 @@ loki-distributed:                                       # modified
           fieldRef:
             fieldPath: status.podIP
     # -- Environment variables from secrets or configmaps to add to the index-gateway pods
-    extraEnvFrom: []
+    
     # -- Volume mounts to add to the index-gateway pods
     extraVolumeMounts: []
     # -- Volumes to add to the index-gateway pods
     extraVolumes: []
     # -- Resource requests and limits for the index-gateway
-    resources: {}
+    resources:
+      limits:
+        cpu: "10m"
+        memory: "28Mi"
     # -- Containers to add to the index-gateway pods
     extraContainers: []
     # -- Init containers to add to the index-gateway pods
@@ -1887,7 +1907,7 @@ loki-distributed:                                       # modified
           fieldRef:
             fieldPath: status.podIP
     # -- Environment variables from secrets or configmaps to add to memcached-chunks pods
-    extraEnvFrom: []
+    
     # -- Resource requests and limits for memcached-chunks
     resources: {}
     # -- Containers to add to the memcached-chunks pods
@@ -1963,7 +1983,7 @@ loki-distributed:                                       # modified
           fieldRef:
             fieldPath: status.podIP
     # -- Environment variables from secrets or configmaps to add to memcached-frontend pods
-    extraEnvFrom: []
+    
     # -- Resource requests and limits for memcached-frontend
     resources: {}
     # -- Containers to add to the memcached-frontend pods
@@ -2035,7 +2055,7 @@ loki-distributed:                                       # modified
           fieldRef:
             fieldPath: status.podIP
     # -- Environment variables from secrets or configmaps to add to memcached-index-queries pods
-    extraEnvFrom: []
+    
     # -- Resource requests and limits for memcached-index-queries
     resources: {}
     # -- Containers to add to the memcached-index-queries pods
@@ -2107,9 +2127,8 @@ loki-distributed:                                       # modified
           fieldRef:
             fieldPath: status.podIP
     # -- Environment variables to add to memcached-index-writes pods
-    extraEnv: []
     # -- Environment variables from secrets or configmaps to add to memcached-index-writes pods
-    extraEnvFrom: []
+    
     # -- Resource requests and limits for memcached-index-writes
     resources: {}
     # -- Containers to add to the memcached-index-writes pods
