@@ -129,10 +129,10 @@ grafana:
     imagePullPolicy: IfNotPresent
     securityContext: {}
     containerSecurityContext: {}
-    resources:
-      limits:
-        cpu: "10m"
-        memory: "412Mi"
+    resources: {}
+      #limits:
+       # cpu: "200m"
+        #memory: "412Mi"
     #  requests:
     #    cpu: 100m
     #    memory: 128Mi
@@ -353,10 +353,10 @@ grafana:
       ## Additional custom rules that can be added to the route
       additionalRules: []
 
-  resources:
-    limits:
-      cpu: "10m"
-      memory: "143Mi"
+  resources: {}
+    #limits:
+      #cpu: "10m"
+      #memory: "143Mi"
   #  requests:
   #    cpu: 100m
   #    memory: 128Mi

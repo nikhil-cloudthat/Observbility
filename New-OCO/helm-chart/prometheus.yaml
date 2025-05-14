@@ -133,8 +133,8 @@ prometheus:
       ##
       resources:
       limits:
-        cpu: "10m"
-        memory: "20Mi"
+        cpu: "20m"
+        memory: "40Mi"
 
   server:
     ## Prometheus server container name
@@ -682,10 +682,10 @@ prometheus:
     ## Prometheus server resource requests and limits
     ## Ref: http://kubernetes.io/docs/user-guide/compute-resources/
     ##
-    resources:
-       limits:
-         cpu: "10m"
-         memory: "935Mi"
+    resources: {}
+       #limits:
+         #cpu: "10m"
+         #memory: "935Mi"
       # requests:
       #   cpu: 500m
       #   memory: 512Mi

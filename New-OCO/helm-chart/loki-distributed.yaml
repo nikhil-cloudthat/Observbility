@@ -622,10 +622,10 @@ loki-distributed:                                       # modified
     # -- Volumes to add to the distributor pods
     extraVolumes: []
     # -- Resource requests and limits for the distributor
-    resources:
-      limits:
-        cpu: "10m"
-        memory: "37Mi"
+    resources: {}
+      #limits:
+        #cpu: "10m"
+        #memory: "37Mi"
     # -- Containers to add to the distributor pods
     extraContainers: []
     # -- Grace period to allow the distributor to shutdown before it is killed
@@ -1490,10 +1490,10 @@ loki-distributed:                                       # modified
     # -- liveness probe settings for ingester pods. If empty use `loki.livenessProbe`
     livenessProbe: {}
     # -- Resource requests and limits for the compactor
-    resources:
-      limits:
-        cpu: "10m"
-        memory: "29Mi"
+    resources: {}
+      #limits:
+        #cpu: "10m"
+        #memory: "29Mi"
     # -- Containers to add to the compactor pods
     extraContainers: []
     # -- Init containers to add to the compactor pods
