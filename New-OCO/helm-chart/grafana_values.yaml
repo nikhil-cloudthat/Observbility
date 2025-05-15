@@ -353,13 +353,10 @@ grafana:
       ## Additional custom rules that can be added to the route
       additionalRules: []
 
-  resources: {}
-    #limits:
-      #cpu: "10m"
-      #memory: "143Mi"
-  #  requests:
-  #    cpu: 100m
-  #    memory: 128Mi
+  resources:
+    limits:
+      cpu: "10m"
+      memory: "119Mi"
 
   ## Node labels for pod assignment
   ## ref: https://kubernetes.io/docs/user-guide/node-selection/
@@ -470,8 +467,8 @@ grafana:
     ##
     resources:
       limits:
-        cpu: "10m"
-        memory: "143Mi"
+        cpu: "17m"
+        memory: "103Mi"
     #  requests:
     #    cpu: 100m
     #    memory: 128Mi
@@ -1513,8 +1510,8 @@ grafana:
       extraIngressSelectors: []
     resources:
      limits:
-       cpu: "10m"
-       memory: "143Mi"
+       cpu: "17m"
+       memory: "116Mi"
   #   requests:
   #     cpu: 50m
   #     memory: 50Mi

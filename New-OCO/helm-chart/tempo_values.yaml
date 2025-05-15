@@ -176,7 +176,7 @@ tempo-distributed:                                          #modified
     resources:
       limits:
         cpu: "10m"
-        memory: "31Mi"
+        memory: "36Mi"
     # -- Grace period to allow the ingester to shutdown before it is killed. Especially for the ingestor,
     # this must be increased. It must be long enough so ingesters can be gracefully shutdown flushing/transferring
     # all data and to successfully leave the member ring on shutdown.
@@ -558,7 +558,7 @@ tempo-distributed:                                          #modified
     resources:
       limits:
         cpu: "10m"
-        memory: "30Mi"
+        memory: "33Mi"
     # -- Grace period to allow the distributor to shutdown before it is killed
     terminationGracePeriodSeconds: 30
     # -- topologySpread for distributor pods. Passed through `tpl` and, thus, to be configured as string
@@ -713,7 +713,7 @@ tempo-distributed:                                          #modified
     resources:
       limits:
         cpu: "10m"
-        memory: "28Mi"
+        memory: "33Mi"
     # -- Grace period to allow the compactor to shutdown before it is killed
     terminationGracePeriodSeconds: 30
     # -- Pod Disruption Budget maxUnavailable
@@ -814,7 +814,7 @@ tempo-distributed:                                          #modified
     resources:
       limits:
         cpu: "10m"
-        memory: "35Mi"
+        memory: "41Mi"
     # -- Grace period to allow the querier to shutdown before it is killed
     terminationGracePeriodSeconds: 30
     # -- topologySpread for querier pods. Passed through `tpl` and, thus, to be configured as string
@@ -1035,7 +1035,7 @@ tempo-distributed:                                          #modified
     resources:
       limits:
         cpu: "10m"
-        memory: "27Mi"
+        memory: "26Mi"
     # -- Grace period to allow the query-frontend to shutdown before it is killed
     terminationGracePeriodSeconds: 30
     # -- topologySpread for query-frontend pods. Passed through `tpl` and, thus, to be configured as string
