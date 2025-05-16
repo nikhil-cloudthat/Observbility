@@ -64,10 +64,6 @@ spec:
               volumeMounts:
                 - name: json-file
                   mountPath: /app/data
-              resources:
-                limits:
-                  memory: "106Mi"
-                  cpu: "10m"
           volumes:
             - name: json-file
               persistentVolumeClaim:
