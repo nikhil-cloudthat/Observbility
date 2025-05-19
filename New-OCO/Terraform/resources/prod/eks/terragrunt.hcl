@@ -31,11 +31,11 @@ inputs = {
     eks_managed_node_groups = {
       worker-nodes = {
         name  = "worker-nodes"
-        instance_types = ["t3a.medium"]
+        instance_types = ["c6a.xlarge"]
         ami_type       = "AL2_x86_64"
-        min_size     = 3
-        max_size     = 5
-        desired_size = 3
+        min_size     = 1
+        max_size     = 2
+        desired_size = 1
     
         iam_role_additional_policies = {
           AmazonSSMManagedInstanceCore = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
