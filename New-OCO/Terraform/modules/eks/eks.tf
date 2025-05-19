@@ -73,6 +73,12 @@ module "eks" {
     vpc-cni                = {
       most_recent = true
       service_account_role_name = "AmazonEKSPodIdentityVPC_CNI_Role"
+      configuration_values = jsonencode({
+        env = {
+          ENABLE_PREFIX_DELEGATION = "true"
+          WARM_PREFIX_TARGET = "1"
+        }
+      })
     }
     aws-ebs-csi-driver     = {
       most_recent = true
@@ -131,5 +137,17 @@ module "eks" {
 #   volume_binding_mode    = "WaitForFirstConsumer"
 #   allow_volume_expansion = true  # Optional but often useful
 
+#   depends_on = [module.eks]
+# }
+
+# Alternative approach using null_resource if the configuration_values in vpc-cni addon doesn't work
+# resource "null_resource" "configure_aws_node" {
+#   provisioner "local-exec" {
+#     command = <<-EOT
+#       aws eks update-kubeconfig --name ${module.eks.cluster_name} --region ${local.region}
+#       kubectl set env daemonset aws-node -n kube-system ENABLE_PREFIX_DELEGATION=true
+#       kubectl set env daemonset aws-node -n kube-system WARM_PREFIX_TARGET=1
+#     EOT
+#   }
 #   depends_on = [module.eks]
 # }
