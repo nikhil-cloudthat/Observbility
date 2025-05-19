@@ -57,7 +57,8 @@ module "eks" {
 
   cluster_name                    = local.cluster_name
   cluster_version                 = local.cluster_version
-  cluster_endpoint_private_access = true
+  cluster_endpoint_private_access = false
+  cluster_endpoint_public_access = true
 
   authentication_mode = "API_AND_CONFIG_MAP"
 
@@ -98,7 +99,7 @@ module "eks" {
       from_port   = 0
       to_port     = 0
       type        = "ingress"
-      cidr_blocks = ["10.0.0.0/16"]      
+      cidr_blocks = ["0.0.0.0/16"]      
     }
   }
 
