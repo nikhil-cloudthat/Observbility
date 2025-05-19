@@ -72,6 +72,7 @@ module "eks" {
       most_recent = true
     }
     vpc-cni                = {
+      before_compute = true
       most_recent = true
       service_account_role_name = "AmazonEKSPodIdentityVPC_CNI_Role"
       configuration_values = jsonencode({
