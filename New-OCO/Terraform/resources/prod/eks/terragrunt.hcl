@@ -36,6 +36,7 @@ inputs = {
         min_size     = 1
         max_size     = 2
         desired_size = 1
+        max_pods_per_node = 110
     
         iam_role_additional_policies = {
           AmazonSSMManagedInstanceCore = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
