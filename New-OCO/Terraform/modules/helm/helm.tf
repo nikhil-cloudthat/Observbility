@@ -94,7 +94,7 @@ resource "helm_release" "oco" {
     file("${var.repo_root}/helm-chart/loki-distributed.yaml"),
     file("${var.repo_root}/helm-chart/tempo_values.yaml"),
     file("${var.repo_root}/helm-chart/promethus-msteams_values.yaml"),
-    file("${var.repo.root}/helm-chart/blackbox_values.yaml")
+    file("${var.repo_root}/helm-chart/blackbox_values.yaml")
   ]
 
   dependency_update = true
