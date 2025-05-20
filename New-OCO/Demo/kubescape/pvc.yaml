@@ -7,7 +7,7 @@ spec:
     storage: 50Mi
   accessModes:
     - ReadWriteOnce
-  storageClassName: hostpath  # Match this with the PVC
+  #storageClassName: hostpath  # Match this with the PVC
   hostPath:
     path: /home/nikhil/resv2.json
 
@@ -22,5 +22,5 @@ spec:
   resources:
     requests:
       storage: 50Mi
-  storageClassName: hostpath  # Match this with the PV
+  #storageClassName: hostpath  # Match this with the PV
   volumeName: json-pv  # Explicitly bind to the PV

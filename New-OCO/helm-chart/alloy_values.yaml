@@ -186,7 +186,10 @@ alloy:
     securityContext: {}
 
     # -- Resource requests and limits to apply to the Grafana Alloy container.
-    resources: {}
+    resources:
+      limits:
+        cpu: "25m"
+        memory: "99Mi"
 
     # -- Set lifecycle hooks for the Grafana Alloy container.
     lifecycle: {}
@@ -248,9 +251,15 @@ alloy:
     customArgs: []
     # -- Resource requests and limits to apply to the config reloader container.
     resources:
+      limits:
+        cpu: "10m"
+        memory: "20Mi"
       requests:
         cpu: "1m"
         memory: "5Mi"
+      limits:
+        cpu: "10m"
+        memory: "20Mi"
     # -- Security context to apply to the Grafana configReloader container.
     securityContext: {}
 

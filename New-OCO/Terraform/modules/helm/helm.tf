@@ -56,7 +56,7 @@ resource "null_resource" "deploy_demo" {
 # }
 
 
-resource "helm_release" "obs" {
+resource "helm_release" "oco" {
   name      = var.release_name
   chart     = "${var.repo_root}/helm-chart"
   create_namespace = true
@@ -93,7 +93,8 @@ resource "helm_release" "obs" {
     file("${var.repo_root}/helm-chart/kubescape_values.yaml"),
     file("${var.repo_root}/helm-chart/loki-distributed.yaml"),
     file("${var.repo_root}/helm-chart/tempo_values.yaml"),
-    file("${var.repo_root}/helm-chart/promethus-msteams_values.yaml")
+    file("${var.repo_root}/helm-chart/promethus-msteams_values.yaml"),
+    file("${var.repo_root}/helm-chart/blackbox_values.yaml")
   ]
 
   dependency_update = true
