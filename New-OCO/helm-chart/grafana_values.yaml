@@ -697,9 +697,9 @@ grafana:
       - name: Prometheus-Cluster2
         type: prometheus
         editable: false
-        url: http://a57a7d5ed1e284dd5ba7afbdce1f48e0-399766659.ap-south-1.elb.amazonaws.com/
+        url: http://ac2ae7eba2c4a40889091edba8c62c8a-430422151.ap-south-1.elb.amazonaws.com
         access: proxy
-        isDefault: false  
+        isDefault: false
         
       #- name: Prometheus-Cluster3
       #  type: prometheus
