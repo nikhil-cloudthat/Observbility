@@ -687,7 +687,7 @@ grafana:
         #       url: 'http://localhost:16686/trace/$${__value.raw}'
 
 
-      - name: Prometheus-Cluster1
+      - name: Prometheus
         type: prometheus
         editable: false
         url: http://prometheus-server.{{.Release.Namespace}}.svc.cluster.local 
