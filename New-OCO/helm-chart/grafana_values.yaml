@@ -692,7 +692,21 @@ grafana:
         editable: false
         url: http://prometheus-server.{{.Release.Namespace}}.svc.cluster.local 
         access: proxy
+        isDefault: true
+        
+      - name: Prometheus-Cluster2
+        type: prometheus
+        editable: false
+        url: http://ac2ae7eba2c4a40889091edba8c62c8a-430422151.ap-south-1.elb.amazonaws.com
+        access: proxy
         isDefault: false
+        
+      #- name: Prometheus-Cluster3
+      #  type: prometheus
+      #  editable: false
+      #  url: http://prometheus-server-cluster3.example.com
+      #  access: proxy
+      #  isDefault: false
 
 
       - name: Tempo
@@ -890,7 +904,7 @@ grafana:
         curlOptions: -Lf
       local-dashboard-4:
         url: https://one-click-observability-cloudthat-resource.s3.ap-south-1.amazonaws.com/Kubernetes_Views_+Global.json
-        curlOptions: -Lf
+        curlOptions:: -Lf
       local-dashboard-5:
         url: https://one-click-observability-cloudthat-resource.s3.ap-south-1.amazonaws.com/Kubernetes_Views_Nodes-.json
         curlOptions: -Lf
